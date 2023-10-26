@@ -81,7 +81,7 @@ async function main() {
     },
   ]);
   if (isTag) {
-    exec(`git tag v${pkg.version}`, (err, stdout, stderr) => {
+    exec(`git tag ${pkg.version}`, (err, stdout, stderr) => {
       if (err) {
         console.log(err);
         process.exit(1);
@@ -89,7 +89,7 @@ async function main() {
       console.log(stdout);
       console.log(stderr);
     });
-    console.log(`git tag v${pkg.version}`);
+    console.log(`git tag ${pkg.version}`);
   }
 }
 
