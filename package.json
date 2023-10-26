@@ -1,6 +1,6 @@
 {
-  "name": "obsidian-vue-starter",
-  "version": "1.0.0",
+  "name": "obsidian-format-docs",
+  "version": "0.0.0",
   "description": "A plugin development template for devs who want to use vue in Obsidian.",
   "main": "main.js",
   "scripts": {
@@ -9,7 +9,9 @@
     "dev": "npm run lint && vite build --watch",
     "build": "npm run type-check && vite build",
     "format": "prettier --write src/",
-    "bumpversion": "node version-bump.mjs && git add manifest.json versions.json"
+    "bumpversion": "node version-bump.mjs && git add manifest.json versions.json",
+    "syncPkgToManifest": "tsx scripts/updateManifest.ts",
+    "updateVersion": "tsx scripts/updateVersion.ts && npm run syncPkgToManifest"
   },
   "keywords": [],
   "author": "Otto",
@@ -28,6 +30,7 @@
     "dotenv-expand": "^10.0.0",
     "eslint": "^8.52.0",
     "eslint-plugin-vue": "^9.17.0",
+    "inquirer": "^9.2.11",
     "obsidian": "latest",
     "prettier": "^2.8.8",
     "tslib": "2.4.0",
@@ -35,5 +38,8 @@
     "vite": "^4.5.0",
     "vue": "^3.3.6",
     "vue-tsc": "^1.8.19"
+  },
+  "dependencies": {
+    "zhlint": "^0.7.1"
   }
 }
