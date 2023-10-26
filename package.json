@@ -1,6 +1,6 @@
 {
   "name": "obsidian-format-docs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A plugin development template for devs who want to use vue in Obsidian.",
   "main": "main.js",
   "scripts": {
