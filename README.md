@@ -1,17 +1,15 @@
 # obsidian-format-docs-by-zhlint
 
-你是否有中英文格式化的困扰，看到文章里混乱的中英文空格是否强迫症都犯了？
+看到 Obisidian 文章里混乱的中英文空格是否强迫症都犯了？
 
-他来了！
+一键格式化插件，他来了！
 
 ```text
 错误：自动在中文和English之间加入空格
 正确：自动在中文和 English 之间加入空格
 ```
 
-通过 zhLint 格式化 Obsidian 文档，简单有效。
-
-Power by [zhlint](https://github.com/zhlint-project/zhlint).
+通过 zhLint 格式化 Obsidian 文档，简单高效。
 
 ## 使用方式
 
@@ -35,6 +33,14 @@ https://github.com/Otto-J/obsidian-docs-format
 - [] 自定义快捷键
 - [] 支持规则勾选
 - [] 上架官方插件市场
+
+有疑问请提 issue.
+
+如果你有能力，请 fork 提 PR
+
+## 致谢
+
+Power by [zhlint](https://github.com/zhlint-project/zhlint).
 
 ## LICENSE
 
