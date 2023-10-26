@@ -32,20 +32,20 @@ async function main() {
       type: "list",
       name: "answer",
       message: "请选择要增加的版本号",
-      choices: ["1", "0.1", "0.0.1"],
+      choices: ["+0.0.1", "+0.1", "+1"],
     },
   ]);
 
   let [major, minor, patch] = pkg.version.split(".");
 
   switch (answer) {
-    case "1":
+    case "+1":
       major = parseInt(major) + 1;
       break;
-    case "0.1":
+    case "+0.1":
       minor = parseInt(minor) + 1;
       break;
-    case "0.0.1":
+    case "+0.0.1":
       patch = parseInt(patch) + 1;
       break;
     default:
