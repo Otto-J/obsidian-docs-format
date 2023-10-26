@@ -2,10 +2,30 @@ import { App, Modal, Plugin, PluginSettingTab, TFile, TFolder } from "obsidian";
 import { createApp, type App as VueApp } from "vue";
 import SettingsPage from "./ui/settings.vue";
 import ModalPage from "./ui/modal.vue";
+import { run, report } from "zhlint";
 
 // const VIEW_TYPE = "vue-view";
 
 // 核心
+
+const formatFile = async (file: TFile, app: App) => {
+  // 读取文件内容
+  const content = await app.vault.cachedRead(file);
+  // console.log(content, "content");
+
+  const options = { rules: { preset: "default" } };
+
+  const output = run(content, options);
+
+  // console.log(output.result);
+
+  const finalData = output.result;
+
+  // 写入文件
+  await app.vault.modify(file, finalData);
+  // 重新打开文件
+  // await app.workspace.openLinkText(file.path, "", true);
+};
 export default class MyPlugin extends Plugin {
   async onload() {
     const settingTab = new SettingTab(this.app, this);
@@ -27,6 +47,11 @@ export default class MyPlugin extends Plugin {
             // 暂不处理
           } else {
             // nothing
+            menu.addItem((item) => {
+              item.setTitle("格式化本文件 by ZhLint").onClick(async () => {
+                formatFile(file, this.app);
+              });
+            });
           }
         }
       })
