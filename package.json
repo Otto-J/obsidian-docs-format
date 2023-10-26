@@ -10,7 +10,6 @@
     "build": "npm run type-check && vite build",
     "format": "prettier --write src/",
     "bumpversion": "node version-bump.mjs && git add manifest.json versions.json",
-    "syncPkgToManifest": "tsx scripts/updateManifest.ts",
     "updateVersion": "tsx scripts/updateVersion.ts && npm run syncPkgToManifest"
   },
   "keywords": [],
