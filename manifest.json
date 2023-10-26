@@ -1,6 +1,6 @@
 {
-  "id": "format-docs",
-  "name": "Docs Format",
+  "id": "format-docs-by-zhlint",
+  "name": "Format Docs By ZhLint",
   "minAppVersion": "0.12.0",
   "authorUrl": "https://github.com/otto-j",
   "isDesktopOnly": true,

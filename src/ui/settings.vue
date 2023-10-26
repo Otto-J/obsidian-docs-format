@@ -1,5 +1,6 @@
 <template>
   <h2>基础 Basic</h2>
+  <!-- <div>{{ settings }}</div> -->
   <!-- enable -->
   <div class="setting-item mod-toggle">
     <div class="setting-item-info">
@@ -19,69 +20,43 @@
       </div>
     </div>
   </div>
-  <h2>xLog</h2>
-  <!-- username -->
-  <div class="setting-item">
+  <!-- hotkey enable -->
+  <!-- <div class="setting-item mod-toggle">
     <div class="setting-item-info">
-      <div class="setting-item-name">XLOG SIWE Token</div>
+      <div class="setting-item-name">启用 Hot Keys Enable</div>
       <div class="setting-item-description">
-        如不清楚 Token 请访问
-        <a tabindex="1" href="https://blog.ijust.cc/play-xlog-02"
-          >获取帮助 Get Help</a
-        >
+        若关闭插件不生效<br />
+        Turn off will disable
       </div>
     </div>
-    <div class="setting-item-control">
-      <input
-        v-model="settings.name"
-        type="password"
-        placeholder="请输入 token"
-        spellcheck="false"
-        tabindex="2"
-      />
-      <button class="mod-cta" tabindex="3">连接测试</button>
-    </div>
-  </div>
-  <!-- charactor ID -->
-  <div class="setting-item">
-    <div class="setting-item-info">
-      <div class="setting-item-name">Charactor ID</div>
-      <!-- <div class="setting-item-description">Github Repo</div> -->
-    </div>
-    <div class="setting-item-control">
-      <select v-if="settings.name" class="dropdown" v-model="settings.name">
-        <option
-          :value="item.value"
-          v-for="item of []"
-          :key="item.value"
-          :label="item.name"
-        ></option>
-      </select>
-      <input
-        v-else
-        v-model="settings.name"
-        type="text"
-        placeholder="建议通过连接测试自动填写"
-        spellcheck="false"
-        tabindex="4"
-      />
-    </div>
-  </div>
-  <!-- need ipfs auto upload -->
-  <div class="setting-item mod-toggle">
-    <div class="setting-item-info">
-      <div class="setting-item-name">上传是否修改图片为 IPFS</div>
-      <div class="setting-item-description">
-        在 XLOG 上是否使用 IPFS 协议展示图片等资源，上传时可单独设置
-      </div>
-    </div>
+
     <div class="setting-item-control">
       <div
         class="checkbox-container"
-        :class="settings.name ? 'is-enabled' : ''"
+        :class="settings.hotkeyEnable ? 'is-enabled' : ''"
       >
-        <input type="checkbox" v-model="settings.name" tabindex="5" />
+        <input type="checkbox" v-model="settings.hotkeyEnable" tabindex="0" />
       </div>
+    </div>
+  </div> -->
+
+  <!-- desc -->
+  <div class="setting-item">
+    <div class="setting-item-info">
+      <div class="setting-item-name">格式化快捷键</div>
+      <div class="setting-item-description">暂时不支持修改</div>
+    </div>
+    <div class="setting-item-control">
+      <span>Control + Shift + L</span>
+    </div>
+  </div>
+  <div class="setting-item">
+    <div class="setting-item-info">
+      <div class="setting-item-name">zhLint 规则</div>
+      <div class="setting-item-description">暂时不支持修改</div>
+    </div>
+    <div class="setting-item-control">
+      <span> preset: default</span>
     </div>
   </div>
 
@@ -99,8 +74,8 @@ const props = defineProps<{
 }>();
 
 const defaultSettings = () => ({
-  name: "",
   enable: true,
+  hotkeyEnable: true,
 });
 const settings = ref(defaultSettings());
 

@@ -1,10 +1,8 @@
-import { App, Modal, Plugin, PluginSettingTab, TFile, TFolder } from "obsidian";
+import { App, Modal, Notice, Plugin, PluginSettingTab, TFile } from "obsidian";
 import { createApp, type App as VueApp } from "vue";
 import SettingsPage from "./ui/settings.vue";
 import ModalPage from "./ui/modal.vue";
-import { run, report } from "zhlint";
-
-// const VIEW_TYPE = "vue-view";
+import { run } from "zhlint";
 
 // 核心
 
@@ -14,30 +12,27 @@ const formatFile = async (file: TFile, app: App) => {
   // console.log(content, "content");
 
   const options = { rules: { preset: "default" } };
-
   const output = run(content, options);
-
   // console.log(output.result);
 
   const finalData = output.result;
-
   // 写入文件
   await app.vault.modify(file, finalData);
   // 重新打开文件
   // await app.workspace.openLinkText(file.path, "", true);
 };
 export default class MyPlugin extends Plugin {
+  private async getSettings() {
+    return this.loadData();
+  }
   async onload() {
     const settingTab = new SettingTab(this.app, this);
     this.addSettingTab(settingTab);
 
-    this.registerEvent(
-      this.app.workspace.on("file-menu", (menu, file) => {
-        if (file instanceof TFolder) {
-          // 一定进不来，为了 ts 不报错
-          return;
-        }
+    // 注册 hotkey
 
+    this.registerEvent(
+      this.app.workspace.on("file-menu", async (menu, file) => {
         if (file instanceof TFile) {
           const isImg = ["png", "jpg", "jpeg", "gif", "webp"].includes(
             file.extension
@@ -46,10 +41,17 @@ export default class MyPlugin extends Plugin {
           if (isImg) {
             // 暂不处理
           } else {
-            // nothing
             menu.addItem((item) => {
-              item.setTitle("格式化本文件 by ZhLint").onClick(async () => {
-                formatFile(file, this.app);
+              item.setTitle("通过 zhLint 格式化文件").onClick(async () => {
+                const settings = await this.getSettings();
+
+                // console.log(settings);
+                if (settings.enable) {
+                  formatFile(file, this.app);
+                  new Notice("格式化完成");
+                } else {
+                  new Notice("未开启格式化文本 by zhLint");
+                }
               });
             });
           }
@@ -64,11 +66,33 @@ export default class MyPlugin extends Plugin {
     // });
 
     // 在这里注册命令 This adds a simple command that can be triggered anywhere
-    // this.addCommand({
-    //   id: "xxx-id",
-    //   name: "注册命令中文名",
-    //   callback: () => this.openMapView(),
-    // });
+
+    this.addCommand({
+      id: "fromat-doc-zhLint",
+      name: "通过 zhLint 格式化文本",
+      hotkeys: [
+        {
+          // control shift l
+          modifiers: ["Ctrl", "Shift"],
+          key: "l",
+        },
+      ],
+      callback: async () => {
+        const settings = await this.getSettings();
+
+        // 获取当前激活的文件
+        const activeFile = this.app.workspace.getActiveFile();
+        // 格式化
+        if (!activeFile) return;
+        if (!settings.enable) {
+          new Notice("未开启格式化文本 by zhLint");
+          return;
+        }
+
+        formatFile(activeFile, this.app);
+        new Notice("格式化完成");
+      },
+    });
   }
 
   onunload() {}
